@@ -33,3 +33,8 @@ d = root_folder()
 folder(d, 'asdf/qwer/asdf/zxcv')
 folder(d, 'asdf/zxcv')
 ls(folder(d, 'asdf'))
+
+print()
+tmp = folder(d, 'asdf/qwer/asdf')
+tmp = folder(tmp, '..')
+print(tmp['_name'])
