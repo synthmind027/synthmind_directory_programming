@@ -10,7 +10,10 @@ def root_folder():
 def ls(d):
 	ignores = ['', '.', '..', '_name', '_desc']
 	chld = [x for x in d.keys() if x not in ignores]
-	print('\t'.join(chld))
+	if len(chld) == 0:
+		print('No folder has been found.')
+	else:
+		print('\t'.join(chld))
 
 def mkdir(d, nm):
 	d[nm] = dict()
@@ -28,8 +31,19 @@ def folder(d, pth):
 		ret = ret[x]
 	return ret
 
+def execute(d, pth):
+	payload = folder(d, pth)['_desc']
+	print(f'exec {payload}')
+
+def rmdir(d, pth):
+	tmp = folder(d, pth)
+	nm = tmp['_name']
+	tmp = tmp['..']
+	del tmp[nm]
+	print(f'[rm] {nm}')
 
 d = root_folder()
+
 folder(d, 'asdf/qwer/asdf/zxcv')
 folder(d, 'asdf/zxcv')
 ls(folder(d, 'asdf'))
@@ -38,3 +52,9 @@ print()
 tmp = folder(d, 'asdf/qwer/asdf')
 tmp = folder(tmp, '..')
 print(tmp['_name'])
+
+folder(d, 'asdf/qwer')['_desc'] = 'hello, world!'
+execute(d, 'asdf/qwer')
+ls(folder(d, 'asdf/qwer'))
+rmdir (d, 'asdf/qwer')
+ls(folder(d, 'asdf/qwer'))
